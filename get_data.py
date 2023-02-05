@@ -2,7 +2,7 @@ import pandas as pd
 import requests
 
 endpoints = {
-    'Spot_Prices' : 'https://api.energidataservice.dk/dataset/Elspotprices?start=2021-01-01&end=2023-01-01&filter={"PriceArea":["DK1", "DK2", "SE3", "SE4", "NO2"]}&sort=HourDK asc',
+    'Spot_Prices' : 'https://api.energidataservice.dk/dataset/Elspotprices?start=2018-01-01&end=2023-01-01&filter={"PriceArea":["DK1", "DK2", "SE3", "SE4", "NO2"]}&sort=HourDK asc',
     'Production&Consumption' : 'https://api.energidataservice.dk/dataset/Transmissionlines?start=2021-01-01&end=2023-01-01'
 }
 
@@ -45,10 +45,11 @@ def pivot_df(input_df:pd.DataFrame, index, columns, values):
 
 
 
-object = Energy_Data(f'{endpoints["Production&Consumption"]}')
-df = object.construct_GridFlow_column_and_pivot('PriceArea', 'ConnectedArea')
+object = Energy_Data(f'{endpoints["Spot_Prices"]}')
+df = object.pivot_df('HourDK', 'PriceArea', 'SpotPriceDKK')
 print(df)
-new_df = pivot_df(df, index='HourDK', columns='GridFlow', values='ScheduledExchangeDayAhead')
-print(new_df)
-df.to_parquet("ScheduledExchangeDayAhead.parq")
+#new_df = pivot_df(df, index='HourDK', columns='GridFlow', values='ScheduledExchangeDayAhead')
+#print(new_df)
+df.to_excel("Spot_Prices.xlsx")
+
 
