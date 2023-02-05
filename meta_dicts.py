@@ -5,7 +5,7 @@ endpoints = {
 
 }
 
-print(endpoints['spot_prices'])
+
 
 
 

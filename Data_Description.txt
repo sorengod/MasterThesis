@@ -1,0 +1,30 @@
+Demand 
+--> Ikke sikker på det kan trækkes, men ellers
+lav simpel model, som kan gøre det
+
+Demand Volatility 
+--> Coefficient of variation ofdemand in a weekly 
+(7 day) moving window (SD / mean)
+
+Margin 
+--> maximum declared output aggregated across all units 
+minus the demand forecast 
+
+Lag-1 Margin 
+--> same definition as above for previous day 
+
+Past Prices 
+- P_t-1 (same period previous day)
+- P_t-7 (Same period previous week)
+- MP_t-1 (average price previous day)
+
+Price Volatility 
+--> Coefficient of variation of spot Prices for 
+each period acroos the preceeding 7 days (same 
+as Demand volatility)
+
+Seasonality 
+
+Trend 
+
+Diurnal effects by modelling each hour independently 
