@@ -3,7 +3,9 @@ import requests
 
 endpoints = {
     'Spot_Prices' : 'https://api.energidataservice.dk/dataset/Elspotprices?start=2018-01-01&end=2023-01-01&filter={"PriceArea":["DK1", "DK2", "SE3", "SE4", "NO2"]}&sort=HourDK asc',
-    'Production&Consumption' : 'https://api.energidataservice.dk/dataset/Transmissionlines?start=2018-01-01&end=2023-01-01&sort=HourDK asc'
+    'Transmission' : 'https://api.energidataservice.dk/dataset/Transmissionlines?start=2018-01-01&end=2023-01-01&sort=HourDK asc', 
+    'Production&Consumption_DK1' : 'https://api.energidataservice.dk/dataset/ProductionConsumptionSettlement?start=2018-01-01&end=2023-01-01&filter={"PriceArea":"DK1"}&sort=HourDK asc',
+    'Production&Consumption_DK2' : 'https://api.energidataservice.dk/dataset/ProductionConsumptionSettlement?start=2018-01-01&end=2023-01-01&filter={"PriceArea":"DK2"}&sort=HourDK asc'
 }
 
 
@@ -44,11 +46,13 @@ def pivot_df(input_df:pd.DataFrame, index, columns, values):
 
 
 
-object = Energy_Data(f'{endpoints["Production&Consumption"]}')
-df = object.construct_GridFlow_column_and_pivot('PriceArea', 'ConnectedArea')
-print(df)
-new_df = pivot_df(df, index='HourDK', columns='GridFlow', values='ExportCapacity')
-print(new_df)
-df.to_parquet("ExportCapacity.parq")
+object = Energy_Data(f'{endpoints["Production&Consumption_DK2"]}')
+df = object.extract_columns_from_ColumnDictionary()
+df.to_pickle("Production&Consumption_DK2.pkl")
+print("DONE")
+
+
+#new_df = pivot_df(df, index='HourDK', columns='GridFlow', values='ScheduledExchangeDayAhead')
+#new_df.to_pickle("data/ScheduledExchangeDayAhead.pkl")
 
 
